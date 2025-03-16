@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    <section class="row" aria-labelledby="appTitle">
+        <h1 id="appTitle">Project - Bregwin Jogi</h1>
+        <p class="lead">An application to manage Actor, TV series, and Episode information</p>
+    </section>
+
+    <p><a href="https://bjogi1-wa-web524-a6.azurewebsites.net/" class="btn btn-primary btn-md">Project on Azure</a></p>
+
+    <div class="row mt-5">
+        <section class="col-md-6" aria-labelledby="whatILearned">
+            <h2 id="whatILearned">What I Learned</h2>
+            <p>I learned to implement new features on the existing project like handling media items, handling uploads, displaying them as well as allowing downloads. I also learned to add a rich text editor for storing biographies and premises. <br/>
+            When displaying different media items, I learned how to show them differently based on the type of media (Audio, PDF, video etc.) I also became more comfortable with publishing web apps on Azure.
+            </p>
+        </section>
+        <section class="col-md-6" aria-labelledby="whatIStruggledWith">
+            <h2 id="whatIStruggledWith">What I struggled with</h2>
+            <p>Initially, the biography was not being saved when clicking create, however, the other properties were being saved properly. After debugging I realised it was because I didn't specify it in the add form model, after adding the field, it worked as expected.<br/>
+            I had some errors when uploading video clips. When I debugged it, I realised it was because of the media size limit set. So I increased it and I was able to upload files larger than 4MB. <br/> 
+            I also ran into a warning message CKeditor informing to use latest version. However, since the latest version was paid, I was able to removing the warning by setting an option in the script. </p>
+        </section>
+    </div>
+</main>

@@ -1,0 +1,191 @@
+﻿@model BJ2247A5.Models.ActorWithShowInfoViewModel
+
+@{
+    ViewBag.Title = "Actor Details";
+}
+
+<h2>@Model.Name</h2>
+
+<div>
+    <hr />
+    <dl class="row ps-3">
+        <dt class="col-sm-2 text-end">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt class="col-sm-2 text-end">
+            @Html.DisplayNameFor(model => model.AlternateName)
+        </dt>
+
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AlternateName)
+        </dd>
+
+        <dt class="col-sm-2 text-end">
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+
+        <dt class="col-sm-2 text-end">
+            @Html.DisplayNameFor(model => model.Height)
+        </dt>
+
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Height)
+        </dd>
+
+        <dt class="col-sm-2 text-end">
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd class="col-sm-10">
+            <img src="@Model.ImageUrl" style="max-height: 100px; max-width: 100px;" />
+        </dd>
+
+        <dt class="col-sm-2 text-end">
+            @Html.DisplayNameFor(model => model.Executive)
+        </dt>
+
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Executive)
+        </dd>
+
+        <hr />
+
+        <dt class="col-sm-2 text-end  mb-3">
+            @Html.DisplayNameFor(model => model.Shows)
+            <br />
+            <span class="badge rounded-pill bg-secondary">
+                @Model.ShowCount shows
+            </span>
+
+        </dt>
+
+        <dd class="col-sm-10">
+            @foreach (var name in Model.Shows)
+            {
+                @Html.DisplayFor(model => name.Name) <br />
+            }
+        </dd>
+
+
+
+
+        @if (!string.IsNullOrEmpty(Model.Biography))
+        {
+            <hr />
+
+            <dt class="col-sm-2 text-end">
+                @Html.DisplayNameFor(model => model.Biography)
+            </dt>
+
+            <dd class="col-sm-10">
+                <div class="card card-body" style="background-color: #f1f1f1">
+                    @Html.Raw(Model.Biography)
+                </div>
+            </dd>
+        }
+
+        @if (Model.Photos.Count() > 0)
+        {
+            <hr />
+            <dt class="col-sm-2 text-end">
+                Photos
+            </dt>
+            <dd class="col-sm-10 row">
+                @foreach (var item in Model.Photos)
+                {
+                   <img src="@Url.Action("GetMediaItem", "Actor", new { id = item.Id })" alt="@item.Caption" title="@item.Caption" style="max-height: 200px; max-width: 200px;" class="img-responsive img-rounded">
+                   <br><small>@item.Caption</small>
+                }
+            </dd>
+        }
+
+
+        @if (Model.Documents.Count() > 0)
+        {
+            <hr />
+
+            <dt class="col-sm-2 text-end">
+                Documents
+            </dt>
+            <dd class="col-sm-10 row">
+                @foreach (var item in Model.Documents)
+                {
+
+                        <a href="@Url.Action("DownloadMediaItem", "Actor", new { id = item.Id })">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png" alt="@item.Caption" style="max-height: 100px; max-width: 100px;">
+                            <br>
+                            <small>@item.Caption</small>
+                        </a>
+                }
+            </dd>
+        }
+
+        @if (Model.AudioClips.Count() > 0)
+        {
+            <hr />
+
+            <dt class="col-sm-2 text-end">
+                Audio Clips
+            </dt>
+
+            <dd class="col-sm-10 row">
+                @foreach (var item in Model.AudioClips)
+                {
+
+                        <audio controls>
+                            <source src="@Url.Action("GetMediaItem", "Actor", new { id = item.Id })" type="audio/mp3">
+
+                        </audio>
+                        <br>
+                        <small>@item.Caption</small>
+                }
+            </dd>
+        }
+
+        @if (Model.VideoClips.Count() > 0)
+        {
+            <hr />
+
+            <dt class="col-sm-2 text-end">
+                Video Clips
+            </dt>
+
+            <dd class="col-sm-10 row">
+                @foreach (var item in Model.VideoClips)
+                {
+                        <video controls>
+                            <source src="@Url.Action("GetMediaItem", "Actor", new { id = item.Id })" type="video/mp4">
+                        </video>
+                        <br>
+                        <small>@item.Caption</small>
+                }
+            </dd>
+        }
+
+
+
+    </dl>
+</div>
+<p>
+    @using System.Security.Claims;
+    @if ((User as ClaimsPrincipal).HasClaim(ClaimTypes.Role, "Executive"))
+    {
+        @Html.ActionLink("Add Media Item", "AddMedia", "Actors", new { id = Model.Id }, new { @class = "toplink" })
+    }
+    |
+    @if ((User as ClaimsPrincipal).HasClaim(ClaimTypes.Role, "Coordinator"))
+    {
+        @Html.ActionLink("Add New Show", "AddShow", "Actors", new { id = Model.Id }, new { @class = "toplink" })
+    }
+    |
+    @Html.ActionLink("Back to List", "Index")
+</p>

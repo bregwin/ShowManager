@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - BJ2247A6</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="BJ2247A5" />
+    <meta name="application-name" content="2241-37e1f044-7e7e-493f-bfa7-2be8555fc32c" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container">
+            @Html.ActionLink("Show Biz II", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Genres", "Index", "Genre", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Actors", "Index", "Actor", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Shows", "Index", "Show", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Episodes", "Index", "Episode", new { area = "" }, new { @class = "nav-link" })</li>
+
+                    <div class="dropdown">
+                        <div class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Load Data
+                        </div>
+
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item">@Html.ActionLink("Roles", "Roles", "LoadData", new { area = "" }, new { @class = "nav-link text-black" })</li>
+
+                            @using System.Security.Claims;
+                            @if ((User as ClaimsPrincipal).HasClaim(ClaimTypes.Role, "Administrator"))
+                            {
+                                <li class="dropdown-item text-black">@Html.ActionLink("Genres", "Genres", "LoadData", new { area = "" }, new { @class = "nav-link text-black" })</li>
+                                <li class="dropdown-item">@Html.ActionLink("Actors", "Actors", "LoadData", new { area = "" }, new { @class = "nav-link text-black" })</li>
+                                <li class="dropdown-item">@Html.ActionLink("Shows", "Shows", "LoadData", new { area = "" }, new { @class = "nav-link text-black" })</li>
+                                <li class="dropdown-item">@Html.ActionLink("Episodes", "Episodes", "LoadData", new { area = "" }, new { @class = "nav-link text-black" })</li>
+                            }
+                        </ul>
+                    </div>
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr />
+        <footer>
+            <p>
+                <small>
+                    By submitting this assignment you agree to the following:
+                    I declare that this assignment is my own work in accordance with the Seneca Academic
+                    Policy. No part of this assignment has been copied manually or electronically from
+                    any other source (including web sites) or distributed to other students.
+                </small>
+            </p>
+            <p>&copy; Bregwin Jogi, bjogi1@myseneca.ca, WEB524, Fall 2024</p>
+        </footer>*@
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("https://unpkg.com/@popperjs/core@2.9.3/dist/umd/popper.min.js")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
